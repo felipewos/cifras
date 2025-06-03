@@ -62,21 +62,6 @@
     const notes = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
     let currentShift = 0;
 
-    const musicas = [
-      { title: "Eu Sei Que Vou Te Amar", file: "eu_sei_que_vou_te_amar.json" },
-      { title: "Amizade Sincera", file: "amizade_sincera.json" }
-    ];
-
-    function populateSelect() {
-      musicaSelect.innerHTML = "";
-      musicas.forEach(musica => {
-        const option = document.createElement("option");
-        option.value = musica.file;
-        option.textContent = musica.title;
-        musicaSelect.appendChild(option);
-      });
-    }
-
     function transposeChord(chord, shift) {
       let original = chord.trim();
       let base = original.match(/^([A-G]#?)/);
@@ -128,6 +113,21 @@
         .then(data => renderCifra(data));
     }
 
+    function carregarLista() {
+      fetch("index.json")
+        .then(res => res.json())
+        .then(musicas => {
+          musicaSelect.innerHTML = "";
+          musicas.forEach(musica => {
+            const option = document.createElement("option");
+            option.value = musica.file;
+            option.textContent = musica.title;
+            musicaSelect.appendChild(option);
+          });
+          if (musicas.length > 0) carregarMusica(musicas[0].file);
+        });
+    }
+
     upBtn.addEventListener("click", () => {
       currentShift++;
       updateChords();
@@ -142,8 +142,7 @@
       carregarMusica(musicaSelect.value);
     });
 
-    populateSelect();
-    carregarMusica(musicaSelect.value);
+    carregarLista();
   </script>
 </body>
 </html>
