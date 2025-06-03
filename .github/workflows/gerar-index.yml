@@ -22,7 +22,7 @@ jobs:
       - name: Gerar index.json
         run: |
           echo "[" > index.json
-          arquivos=$(find . -maxdepth 1 -name '*.json' ! -name 'index.json' | sort)
+          arquivos=$(find cifras -name '*.json' | sort)
           for file in $arquivos; do
             titulo=$(jq -r .title "$file")
             echo "  {\"title\": \"$titulo\", \"file\": \"${file#./}\"}," >> index.json
