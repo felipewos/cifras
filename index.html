@@ -45,10 +45,7 @@
 <body>
   <h2 id="titulo-musica">Carregando...</h2>
   <div class="controls">
-    <select id="musicaSelect">
-      <option value="eu_sei_que_vou_te_amar.json">Eu Sei Que Vou Te Amar</option>
-      <option value="amizade_sincera.json">Amizade Sincera</option>
-    </select>
+    <select id="musicaSelect"></select>
     <button id="downBtn">- Meio Tom</button>
     <button id="upBtn">+ Meio Tom</button>
   </div>
@@ -64,6 +61,21 @@
 
     const notes = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
     let currentShift = 0;
+
+    const musicas = [
+      { title: "Eu Sei Que Vou Te Amar", file: "eu_sei_que_vou_te_amar.json" },
+      { title: "Amizade Sincera", file: "amizade_sincera.json" }
+    ];
+
+    function populateSelect() {
+      musicaSelect.innerHTML = "";
+      musicas.forEach(musica => {
+        const option = document.createElement("option");
+        option.value = musica.file;
+        option.textContent = musica.title;
+        musicaSelect.appendChild(option);
+      });
+    }
 
     function transposeChord(chord, shift) {
       let original = chord.trim();
@@ -130,7 +142,7 @@
       carregarMusica(musicaSelect.value);
     });
 
-    // Carrega a primeira música por padrão
+    populateSelect();
     carregarMusica(musicaSelect.value);
   </script>
 </body>
