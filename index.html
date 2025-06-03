@@ -124,7 +124,7 @@
 
     function carregarMusica(arquivo) {
       currentShift = 0;
-      fetch(arquivo)
+      fetch("cifras/" + arquivo)
         .then(res => res.json())
         .then(data => renderCifra(data));
     }
