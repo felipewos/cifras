@@ -3,37 +3,79 @@
   "lines": [
     {
       "chords": [
-        { "text": "D", "position": 0 },
-        { "text": "A", "position": 9 },
-        { "text": "Bm", "position": 18 },
-        { "text": "G", "position": 30 }
+        {
+          "text": "D",
+          "position": 0
+        },
+        {
+          "text": "A",
+          "position": 10
+        },
+        {
+          "text": "Bm",
+          "position": 20
+        },
+        {
+          "text": "G",
+          "position": 30
+        }
       ],
-      "lyrics": "Amizade sincera é um santo remédio, um abrigo seguro"
+      "lyrics": "Amizade sincera \u00e9 um santo rem\u00e9dio, um abrigo seguro"
     },
     {
       "chords": [
-        { "text": "D", "position": 0 },
-        { "text": "G", "position": 10 },
-        { "text": "A", "position": 22 }
+        {
+          "text": "D",
+          "position": 0
+        },
+        {
+          "text": "G",
+          "position": 10
+        },
+        {
+          "text": "A",
+          "position": 20
+        }
       ],
-      "lyrics": "É um ombro amigo, é luz no escuro"
+      "lyrics": "\u00c9 um ombro amigo, \u00e9 luz no escuro"
     },
     {
       "chords": [
-        { "text": "D", "position": 0 },
-        { "text": "A", "position": 9 },
-        { "text": "Bm", "position": 18 },
-        { "text": "G", "position": 30 }
+        {
+          "text": "D",
+          "position": 0
+        },
+        {
+          "text": "A",
+          "position": 9
+        },
+        {
+          "text": "Bm",
+          "position": 18
+        },
+        {
+          "text": "G",
+          "position": 30
+        }
       ],
       "lyrics": "Ser seu companheiro e poder lhe contar meus segredos"
     },
     {
       "chords": [
-        { "text": "D", "position": 0 },
-        { "text": "G", "position": 10 },
-        { "text": "A", "position": 22 }
+        {
+          "text": "D",
+          "position": 0
+        },
+        {
+          "text": "G",
+          "position": 10
+        },
+        {
+          "text": "A",
+          "position": 22
+        }
       ],
-      "lyrics": "E saber que com você eu posso ser verdadeiro"
+      "lyrics": "E saber que com voc\u00ea eu posso ser verdadeiro"
     }
   ]
 }
