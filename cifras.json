@@ -1,20 +1,46 @@
 {
   "eu_sei_que_vou_te_amar": {
     "title": "Eu Sei Que Vou Te Amar",
-    "chords": [
-      { "text": "C",  "position": 0 },
-      { "text": "G",  "position": 10 },
-      { "text": "Am", "position": 20 }
-    ],
-    "lyrics": "Eu sei que vou te amar por toda a minha vida"
+    "lines": [
+      {
+        "chords": [
+          { "text": "C", "position": 0 },
+          { "text": "G", "position": 10 },
+          { "text": "Am", "position": 20 },
+          { "text": "F", "position": 30 }
+        ],
+        "lyrics": "Eu sei que vou te amar por toda a minha vida"
+      },
+      {
+        "chords": [
+          { "text": "Dm", "position": 0 },
+          { "text": "G",  "position": 10 },
+          { "text": "C",  "position": 20 }
+        ],
+        "lyrics": "E em cada despedida eu vou chorar"
+      }
+    ]
   },
   "amizade_sincera": {
     "title": "Amizade Sincera",
-    "chords": [
-      { "text": "D",  "position": 0 },
-      { "text": "A",  "position": 8 },
-      { "text": "Bm", "position": 16 }
-    ],
-    "lyrics": "Amizade sincera é um santo remédio, um abrigo seguro"
+    "lines": [
+      {
+        "chords": [
+          { "text": "D", "position": 0 },
+          { "text": "A", "position": 10 },
+          { "text": "Bm", "position": 20 },
+          { "text": "G", "position": 30 }
+        ],
+        "lyrics": "Amizade sincera é um santo remédio, um abrigo seguro"
+      },
+      {
+        "chords": [
+          { "text": "D", "position": 0 },
+          { "text": "G", "position": 10 },
+          { "text": "A", "position": 20 }
+        ],
+        "lyrics": "É um ombro amigo, é luz no escuro"
+      }
+    ]
   }
 }
