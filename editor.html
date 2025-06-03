@@ -30,70 +30,75 @@
   </style>
 </head>
 <body>
-  <a class="link-voltar" href="index.html">⬅️ Voltar para lista de cifras</a>
   <h1>Editor de Cifras</h1>
+
   <label>Título da música:</label>
   <input type="text" id="titulo" placeholder="Ex: Amizade Sincera" />
 
   <label>Digite a cifra (acordes em uma linha, letra na linha seguinte):</label>
-  <textarea id="entrada" rows="12" placeholder="[C]        [G]        [Am]       [F]\nAmizade sincera é um santo remédio\nUm abrigo seguro\n\n[C]     [G]     [Am]\nÉ um ombro amigo, é luz no escuro\n   [F]\nÉ tudo de bom"></textarea>
+  <textarea id="entrada" rows="12" placeholder="[C]        [G]        [Am]       [F]
+Amizade sincera é um santo remédio
+Um abrigo seguro
 
-  <button onclick="gerarJSON()">Gerar JSON</button>
+[C]     [G]     [Am]
+É um ombro amigo, é luz no escuro
+   [F]
+É tudo de bom"></textarea>
+
+  <button onclick="gerarJSON()">Gerar e Enviar JSON</button>
 
   <h2>Resultado</h2>
   <pre id="saida"></pre>
 
   <script>
-  function gerarJSON() {
-    const titulo = document.getElementById("titulo").value.trim();
-    const entrada = document.getElementById("entrada").value.trim();
-    const linhas = entrada.split("\n");
-    const resultado = { title: titulo, lines: [] };
+    function gerarJSON() {
+      const titulo = document.getElementById("titulo").value.trim();
+      const entrada = document.getElementById("entrada").value.trim();
+      const linhas = entrada.split("\n");
+      const resultado = { title: titulo, lines: [] };
 
-    for (let i = 0; i < linhas.length; i++) {
-      const linhaAcordes = linhas[i];
-      const linhaLetra = linhas[i + 1];
+      for (let i = 0; i < linhas.length; i++) {
+        const linhaAcordes = linhas[i];
+        const linhaLetra = linhas[i + 1];
 
-      if (linhaLetra === undefined || linhaAcordes.trim() === "") continue;
+        if (linhaLetra === undefined || linhaAcordes.trim() === "") continue;
 
-      const chords = [];
-      let letraLimpa = linhaLetra;
+        const chords = [];
+        let letraLimpa = linhaLetra;
 
-      linhaAcordes.replace(/\[(.*?)\]/g, (match, acorde, offset) => {
-        const textoSemColchetes = linhaAcordes.substring(0, offset).replace(/\[(.*?)\]/g, "");
-        const posicao = textoSemColchetes.length;
-        chords.push({ text: acorde, position: posicao });
-      });
+        linhaAcordes.replace(/\[(.*?)\]/g, (match, acorde, offset) => {
+          const textoSemColchetes = linhaAcordes.substring(0, offset).replace(/\[(.*?)\]/g, "");
+          const posicao = textoSemColchetes.length;
+          chords.push({ text: acorde, position: posicao });
+        });
 
-      resultado.lines.push({ chords, lyrics: letraLimpa });
-      i++; // pular a linha de letra que já foi processada
-    }
+        resultado.lines.push({ chords, lyrics: letraLimpa });
+        i++; // pula a linha de letra já processada
+      }
 
-    const nomeArquivo = titulo.toLowerCase().replace(/\s+/g, "_") + ".json";
-    const saida = document.getElementById("saida");
-    saida.textContent = JSON.stringify(resultado, null, 2);
+      const nomeArquivo = titulo.toLowerCase().replace(/\s+/g, "_") + ".json";
+      document.getElementById("saida").textContent = JSON.stringify(resultado, null, 2);
 
-    // Enviar para o servidor
-    fetch("http://localhost:3000/enviar", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ nome: nomeArquivo, conteudo: resultado }),
-    })
-      .then(res => {
-        if (res.ok) {
-          alert("Cifra enviada com sucesso!");
-        } else {
-          alert("Erro ao enviar cifra.");
-        }
+      // Enviar para backend
+      fetch("http://localhost:3000/enviar", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ nome: nomeArquivo, conteudo: resultado }),
       })
-      .catch(err => {
-        alert("Erro de conexão com o servidor.");
-        console.error(err);
-      });
-  }
-</script>
-
+        .then(res => {
+          if (res.ok) {
+            alert("Cifra enviada com sucesso!");
+          } else {
+            alert("Erro ao enviar cifra.");
+          }
+        })
+        .catch(err => {
+          alert("Erro de conexão com o servidor.");
+          console.error(err);
+        });
+    }
+  </script>
 </body>
 </html>
