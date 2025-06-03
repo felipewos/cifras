@@ -40,6 +40,10 @@
       margin: 0 5px 10px 0;
       cursor: pointer;
     }
+    mark {
+      background-color: yellow;
+      color: black;
+    }
   </style>
 </head>
 <body>
@@ -64,6 +68,15 @@
     const notes = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
     let currentShift = 0;
     let todasMusicas = [];
+
+    function removerAcentos(texto) {
+      return texto.normalize("NFD").replace(/[̀-ͯ]/g, "");
+    }
+
+    function destaqueTitulo(titulo, termo) {
+      const regex = new RegExp(`(${termo})`, "gi");
+      return titulo.replace(regex, '<mark>$1</mark>');
+    }
 
     function transposeChord(chord, shift) {
       let original = chord.trim();
@@ -118,13 +131,14 @@
 
     function atualizarListaFiltrada(filtro) {
       musicaSelect.innerHTML = "";
+      const filtroLimpo = removerAcentos(filtro.toLowerCase());
       const filtradas = todasMusicas.filter(musica =>
-        musica.title.toLowerCase().includes(filtro.toLowerCase())
+        removerAcentos(musica.title.toLowerCase()).includes(filtroLimpo)
       );
       filtradas.forEach(musica => {
         const option = document.createElement("option");
         option.value = musica.file;
-        option.textContent = musica.title;
+        option.innerHTML = destaqueTitulo(musica.title, filtro);
         musicaSelect.appendChild(option);
       });
       if (filtradas.length > 0) carregarMusica(filtradas[0].file);
