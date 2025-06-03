@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cifra com Transposição Fixa</title>
+  <style>
+    body {
+      font-family: monospace;
+      background: #f7f7f7;
+      padding: 30px;
+      position: relative;
+    }
+    .cifra-container {
+      margin-bottom: 1em;
+    }
+    .cifra-line {
+      position: relative;
+      height: 3em;
+      margin-bottom: 1.5em;
+    }
+    .chord {
+      position: absolute;
+      top: 0;
+      font-weight: bold;
+      color: #2a7f62;
+      text-align: left;
+    }
+    .lyrics {
+      position: absolute;
+      top: 1.5em;
+      white-space: pre;
+    }
+    .controls {
+      margin-bottom: 20px;
+    }
+    button, select {
+      padding: 8px 12px;
+      font-size: 14px;
+      margin: 0 5px 10px 0;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h2 id="titulo-musica">Carregando...</h2>
+  <div class="controls">
+    <select id="musicaSelect"></select>
+    <button id="downBtn">- Meio Tom</button>
+    <button id="upBtn">+ Meio Tom</button>
+  </div>
+
+  <div class="cifra-container" id="cifra-container"></div>
+
+  <script>
+    const cifraContainer = document.getElementById("cifra-container");
+    const title = document.getElementById("titulo-musica");
+    const upBtn = document.getElementById("upBtn");
+    const downBtn = document.getElementById("downBtn");
+    const musicaSelect = document.getElementById("musicaSelect");
+
+    const notes = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
+    let currentShift = 0;
+    let allData = {};
+
+    function transposeChord(chord, shift) {
+      let original = chord.trim();
+      let base = original.match(/^([A-G]#?)/);
+      if (!base) return chord;
+      let index = notes.indexOf(base[1]);
+      if (index === -1) return chord;
+      let newNote = notes[(index + shift + 12) % 12];
+      let suffix = original.slice(base[1].length);
+      return newNote + suffix;
+    }
+
+    function renderCifra(data) {
+      title.textContent = data.title;
+      cifraContainer.innerHTML = "";
+      data.lines.forEach(line => {
+        const cifraLine = document.createElement("div");
+        cifraLine.classList.add("cifra-line");
+
+        const lyrics = document.createElement("div");
+        lyrics.classList.add("lyrics");
+        lyrics.textContent = line.lyrics;
+        cifraLine.appendChild(lyrics);
+
+        line.chords.forEach(chord => {
+          const span = document.createElement("span");
+          span.classList.add("chord");
+          span.setAttribute("data-original", chord.text);
+          span.style.left = chord.position + "ch";
+          span.textContent = transposeChord(chord.text, currentShift);
+          cifraLine.appendChild(span);
+        });
+
+        cifraContainer.appendChild(cifraLine);
+      });
+    }
+
+    function updateChords() {
+      const chordSpans = document.querySelectorAll(".chord");
+      chordSpans.forEach(span => {
+        const original = span.getAttribute("data-original");
+        span.textContent = transposeChord(original, currentShift);
+      });
+    }
+
+    function carregarMusica(nome) {
+      currentShift = 0;
+      renderCifra(allData[nome]);
+    }
+
+    upBtn.addEventListener("click", () => {
+      currentShift++;
+      updateChords();
+    });
+
+    downBtn.addEventListener("click", () => {
+      currentShift--;
+      updateChords();
+    });
+
+    musicaSelect.addEventListener("change", () => {
+      carregarMusica(musicaSelect.value);
+    });
+
+    fetch("cifras.json")
+      .then(res => res.json())
+      .then(data => {
+        allData = data;
+        Object.keys(data).forEach(key => {
+          const option = document.createElement("option");
+          option.value = key;
+          option.textContent = data[key].title;
+          musicaSelect.appendChild(option);
+        });
+        carregarMusica(musicaSelect.value);
+      });
+  </script>
+</body>
+</html>

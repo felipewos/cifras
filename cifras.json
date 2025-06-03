@@ -1,0 +1,20 @@
+{
+  "eu_sei_que_vou_te_amar": {
+    "title": "Eu Sei Que Vou Te Amar",
+    "chords": [
+      { "text": "C",  "position": 0 },
+      { "text": "G",  "position": 10 },
+      { "text": "Am", "position": 20 }
+    ],
+    "lyrics": "Eu sei que vou te amar por toda a minha vida"
+  },
+  "amizade_sincera": {
+    "title": "Amizade Sincera",
+    "chords": [
+      { "text": "D",  "position": 0 },
+      { "text": "A",  "position": 8 },
+      { "text": "Bm", "position": 16 }
+    ],
+    "lyrics": "Amizade sincera é um santo remédio, um abrigo seguro"
+  }
+}
