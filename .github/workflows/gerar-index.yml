@@ -3,7 +3,7 @@ name: Atualizar index.json com base nas cifras
 on:
   push:
     paths:
-      - '*.json'
+      - 'cifras/*.json'
       - '!index.json'
 
 jobs:
@@ -25,7 +25,7 @@ jobs:
           arquivos=$(find cifras -name '*.json' | sort)
           for file in $arquivos; do
             titulo=$(jq -r .title "$file")
-            echo "  {\"title\": \"$titulo\", \"file\": \"${file#./}\"}," >> index.json
+            echo "  {\"title\": \"$titulo\", \"file\": \"$file\"}," >> index.json
           done
           sed -i '$ s/,$//' index.json
           echo "]" >> index.json
