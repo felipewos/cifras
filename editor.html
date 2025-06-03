@@ -31,26 +31,21 @@
 </head>
 <body>
   <h1>Editor de Cifras</h1>
-
   <label>Título da música:</label>
   <input type="text" id="titulo" placeholder="Ex: Amizade Sincera" />
 
   <label>Digite a cifra (acordes em uma linha, letra na linha seguinte):</label>
-  <textarea id="entrada" rows="12" placeholder="[C]        [G]        [Am]       [F]
-Amizade sincera é um santo remédio
-Um abrigo seguro
+  <textarea id="entrada" rows="12" placeholder="[C]        [G]        [Am]       [F]\nAmizade sincera é um santo remédio\nUm abrigo seguro\n\n[C]     [G]     [Am]\nÉ um ombro amigo, é luz no escuro\n   [F]\nÉ tudo de bom"></textarea>
 
-[C]     [G]     [Am]
-É um ombro amigo, é luz no escuro
-   [F]
-É tudo de bom"></textarea>
-
-  <button onclick="gerarJSON()">Gerar e Enviar JSON</button>
+  <button onclick="gerarJSON()">Gerar JSON</button>
+  <button onclick="enviarJSON()" id="btnEnviar" style="display: none;">Enviar para o GitHub</button>
 
   <h2>Resultado</h2>
   <pre id="saida"></pre>
 
   <script>
+    let jsonGerado = null;
+
     function gerarJSON() {
       const titulo = document.getElementById("titulo").value.trim();
       const entrada = document.getElementById("entrada").value.trim();
@@ -73,31 +68,28 @@ Um abrigo seguro
         });
 
         resultado.lines.push({ chords, lyrics: letraLimpa });
-        i++; // pula a linha de letra já processada
+        i++; // pular a linha da letra
       }
 
-      const nomeArquivo = titulo.toLowerCase().replace(/\s+/g, "_") + ".json";
+      jsonGerado = resultado;
       document.getElementById("saida").textContent = JSON.stringify(resultado, null, 2);
+      document.getElementById("btnEnviar").style.display = "inline-block";
+    }
 
-      // Enviar para backend
-      fetch("http://localhost:3000/enviar", {
+    function enviarJSON() {
+      if (!jsonGerado) return alert("Você precisa gerar o JSON primeiro.");
+      const nomeArquivo = jsonGerado.title.toLowerCase().replace(/\s+/g, "_") + ".json";
+
+      fetch("http://localhost:3000/upload", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ nome: nomeArquivo, conteudo: resultado }),
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ filename: nomeArquivo, content: jsonGerado })
       })
         .then(res => {
-          if (res.ok) {
-            alert("Cifra enviada com sucesso!");
-          } else {
-            alert("Erro ao enviar cifra.");
-          }
+          if (res.ok) alert("Enviado com sucesso para o GitHub!");
+          else alert("Erro ao enviar.");
         })
-        .catch(err => {
-          alert("Erro de conexão com o servidor.");
-          console.error(err);
-        });
+        .catch(() => alert("Falha ao conectar com o servidor."));
     }
   </script>
 </body>
