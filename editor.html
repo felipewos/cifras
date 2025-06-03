@@ -35,16 +35,24 @@
   <input type="text" id="titulo" placeholder="Ex: Amizade Sincera" />
 
   <label>Digite a cifra (acordes em uma linha, letra na linha seguinte):</label>
-  <textarea id="entrada" rows="12" placeholder="[C]        [G]        [Am]       [F]\nAmizade sincera é um santo remédio\nUm abrigo seguro\n\n[C]     [G]     [Am]\nÉ um ombro amigo, é luz no escuro\n   [F]\nÉ tudo de bom"></textarea>
+  <textarea id="entrada" rows="12" placeholder="[C]        [G]        [Am]       [F]
+Amizade sincera é um santo remédio
+Um abrigo seguro
+
+[C]     [G]     [Am]
+É um ombro amigo, é luz no escuro
+   [F]
+É tudo de bom"></textarea>
 
   <button onclick="gerarJSON()">Gerar JSON</button>
-  <button onclick="enviarJSON()" id="btnEnviar" style="display: none;">Enviar para o GitHub</button>
+  <button onclick="enviarParaGitHub()">Enviar para o GitHub</button>
 
   <h2>Resultado</h2>
   <pre id="saida"></pre>
 
   <script>
-    let jsonGerado = null;
+    const servidor = "https://cifras-backend.onrender.com";
+    let jsonGerado = {};
 
     function gerarJSON() {
       const titulo = document.getElementById("titulo").value.trim();
@@ -59,37 +67,37 @@
         if (linhaLetra === undefined || linhaAcordes.trim() === "") continue;
 
         const chords = [];
-        let letraLimpa = linhaLetra;
-
         linhaAcordes.replace(/\[(.*?)\]/g, (match, acorde, offset) => {
           const textoSemColchetes = linhaAcordes.substring(0, offset).replace(/\[(.*?)\]/g, "");
           const posicao = textoSemColchetes.length;
           chords.push({ text: acorde, position: posicao });
         });
 
-        resultado.lines.push({ chords, lyrics: letraLimpa });
-        i++; // pular a linha da letra
+        resultado.lines.push({ chords, lyrics: linhaLetra });
+        i++; // pular a linha de letra que já foi processada
       }
 
       jsonGerado = resultado;
       document.getElementById("saida").textContent = JSON.stringify(resultado, null, 2);
-      document.getElementById("btnEnviar").style.display = "inline-block";
     }
 
-    function enviarJSON() {
-      if (!jsonGerado) return alert("Você precisa gerar o JSON primeiro.");
-      const nomeArquivo = jsonGerado.title.toLowerCase().replace(/\s+/g, "_") + ".json";
+    function enviarParaGitHub() {
+      if (!jsonGerado.title) {
+        alert("Gere o JSON primeiro.");
+        return;
+      }
 
-      fetch("http://localhost:3000/upload", {
+      fetch(servidor + "/upload", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ filename: nomeArquivo, content: jsonGerado })
+        body: JSON.stringify(jsonGerado)
       })
-        .then(res => {
-          if (res.ok) alert("Enviado com sucesso para o GitHub!");
-          else alert("Erro ao enviar.");
-        })
-        .catch(() => alert("Falha ao conectar com o servidor."));
+      .then(res => {
+        if (!res.ok) throw new Error("Falha no envio");
+        return res.json();
+      })
+      .then(data => alert("Enviado com sucesso!\n" + data.message))
+      .catch(err => alert("Falha ao conectar com o servidor."));
     }
   </script>
 </body>
