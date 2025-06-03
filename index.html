@@ -45,7 +45,10 @@
 <body>
   <h2 id="titulo-musica">Carregando...</h2>
   <div class="controls">
-    <select id="musicaSelect"></select>
+    <select id="musicaSelect">
+      <option value="eu_sei_que_vou_te_amar.json">Eu Sei Que Vou Te Amar</option>
+      <option value="amizade_sincera.json">Amizade Sincera</option>
+    </select>
     <button id="downBtn">- Meio Tom</button>
     <button id="upBtn">+ Meio Tom</button>
   </div>
@@ -61,7 +64,6 @@
 
     const notes = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
     let currentShift = 0;
-    let allData = {};
 
     function transposeChord(chord, shift) {
       let original = chord.trim();
@@ -107,9 +109,11 @@
       });
     }
 
-    function carregarMusica(nome) {
+    function carregarMusica(arquivo) {
       currentShift = 0;
-      renderCifra(allData[nome]);
+      fetch(arquivo)
+        .then(res => res.json())
+        .then(data => renderCifra(data));
     }
 
     upBtn.addEventListener("click", () => {
@@ -126,18 +130,8 @@
       carregarMusica(musicaSelect.value);
     });
 
-    fetch("cifras.json")
-      .then(res => res.json())
-      .then(data => {
-        allData = data;
-        Object.keys(data).forEach(key => {
-          const option = document.createElement("option");
-          option.value = key;
-          option.textContent = data[key].title;
-          musicaSelect.appendChild(option);
-        });
-        carregarMusica(musicaSelect.value);
-      });
+    // Carrega a primeira música por padrão
+    carregarMusica(musicaSelect.value);
   </script>
 </body>
 </html>
