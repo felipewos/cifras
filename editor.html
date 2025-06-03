@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Editor de Cifras</title>
+  <style>
+    body {
+      font-family: monospace;
+      padding: 2em;
+      background: #f0f0f0;
+    }
+    textarea, input {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      font-family: monospace;
+    }
+    button {
+      padding: 10px 15px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    pre {
+      background: white;
+      padding: 1em;
+      border: 1px solid #ccc;
+      white-space: pre-wrap;
+    }
+  </style>
+</head>
+<body>
+  <h1>Editor de Cifras</h1>
+  <label>Título da música:</label>
+  <input type="text" id="titulo" placeholder="Ex: Amizade Sincera" />
+
+  <label>Cifra com acordes entre colchetes:</label>
+  <textarea id="entrada" rows="10" placeholder="Ex: [C]Amizade [G]sincera é um santo [Am]remédio"></textarea>
+
+  <button onclick="gerarJSON()">Gerar JSON</button>
+
+  <h2>Resultado</h2>
+  <pre id="saida"></pre>
+
+  <script>
+    function gerarJSON() {
+      const titulo = document.getElementById("titulo").value.trim();
+      const entrada = document.getElementById("entrada").value.trim();
+      const linhas = entrada.split("\n");
+      const resultado = { title: titulo, lines: [] };
+
+      linhas.forEach(linha => {
+        const chords = [];
+        let lyrics = linha.replace(/\[(.*?)\]/g, "");
+
+        let pos = 0;
+        linha.replace(/\[(.*?)\]/g, (match, acorde, offset) => {
+          const textoSemColchetes = linha.substring(0, offset).replace(/\[(.*?)\]/g, "");
+          const posicao = textoSemColchetes.length;
+          chords.push({ text: acorde, position: posicao });
+        });
+
+        resultado.lines.push({ chords, lyrics });
+      });
+
+      document.getElementById("saida").textContent = JSON.stringify(resultado, null, 2);
+    }
+  </script>
+</body>
+</html>
