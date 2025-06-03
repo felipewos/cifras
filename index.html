@@ -34,7 +34,7 @@
     .controls {
       margin-bottom: 20px;
     }
-    button, select {
+    button, select, input[type="text"] {
       padding: 8px 12px;
       font-size: 14px;
       margin: 0 5px 10px 0;
@@ -45,6 +45,7 @@
 <body>
   <h2 id="titulo-musica">Carregando...</h2>
   <div class="controls">
+    <input type="text" id="searchInput" placeholder="Buscar música..." />
     <select id="musicaSelect"></select>
     <button id="downBtn">- Meio Tom</button>
     <button id="upBtn">+ Meio Tom</button>
@@ -58,9 +59,11 @@
     const upBtn = document.getElementById("upBtn");
     const downBtn = document.getElementById("downBtn");
     const musicaSelect = document.getElementById("musicaSelect");
+    const searchInput = document.getElementById("searchInput");
 
     const notes = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
     let currentShift = 0;
+    let todasMusicas = [];
 
     function transposeChord(chord, shift) {
       let original = chord.trim();
@@ -113,18 +116,26 @@
         .then(data => renderCifra(data));
     }
 
+    function atualizarListaFiltrada(filtro) {
+      musicaSelect.innerHTML = "";
+      const filtradas = todasMusicas.filter(musica =>
+        musica.title.toLowerCase().includes(filtro.toLowerCase())
+      );
+      filtradas.forEach(musica => {
+        const option = document.createElement("option");
+        option.value = musica.file;
+        option.textContent = musica.title;
+        musicaSelect.appendChild(option);
+      });
+      if (filtradas.length > 0) carregarMusica(filtradas[0].file);
+    }
+
     function carregarLista() {
       fetch("index.json")
         .then(res => res.json())
         .then(musicas => {
-          musicaSelect.innerHTML = "";
-          musicas.forEach(musica => {
-            const option = document.createElement("option");
-            option.value = musica.file;
-            option.textContent = musica.title;
-            musicaSelect.appendChild(option);
-          });
-          if (musicas.length > 0) carregarMusica(musicas[0].file);
+          todasMusicas = musicas;
+          atualizarListaFiltrada("");
         });
     }
 
@@ -140,6 +151,10 @@
 
     musicaSelect.addEventListener("change", () => {
       carregarMusica(musicaSelect.value);
+    });
+
+    searchInput.addEventListener("input", () => {
+      atualizarListaFiltrada(searchInput.value);
     });
 
     carregarLista();
