@@ -1,0 +1,12 @@
+{
+  "title": "Teste Automático",
+  "lines": [
+    {
+      "chords": [
+        { "text": "G", "position": 0 },
+        { "text": "C", "position": 10 }
+      ],
+      "lyrics": "Linha de teste para o GitHub Actions"
+    }
+  ]
+}
