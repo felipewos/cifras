@@ -1,1 +1,40 @@
 
+{
+  "title": "Amizade Sincera",
+  "lines": [
+    {
+      "chords": [
+        { "text": "D", "position": 0 },
+        { "text": "A", "position": 9 },
+        { "text": "Bm", "position": 18 },
+        { "text": "G", "position": 30 }
+      ],
+      "lyrics": "Amizade sincera é um santo remédio, um abrigo seguro"
+    },
+    {
+      "chords": [
+        { "text": "D", "position": 0 },
+        { "text": "G", "position": 10 },
+        { "text": "A", "position": 22 }
+      ],
+      "lyrics": "É um ombro amigo, é luz no escuro"
+    },
+    {
+      "chords": [
+        { "text": "D", "position": 0 },
+        { "text": "A", "position": 9 },
+        { "text": "Bm", "position": 18 },
+        { "text": "G", "position": 30 }
+      ],
+      "lyrics": "Ser seu companheiro e poder lhe contar meus segredos"
+    },
+    {
+      "chords": [
+        { "text": "D", "position": 0 },
+        { "text": "G", "position": 10 },
+        { "text": "A", "position": 22 }
+      ],
+      "lyrics": "E saber que com você eu posso ser verdadeiro"
+    }
+  ]
+}
