@@ -34,8 +34,8 @@
   <label>Título da música:</label>
   <input type="text" id="titulo" placeholder="Ex: Amizade Sincera" />
 
-  <label>Cifra com acordes entre colchetes:</label>
-  <textarea id="entrada" rows="10" placeholder="Ex: [C]Amizade [G]sincera é um santo [Am]remédio"></textarea>
+  <label>Digite a cifra (acordes em uma linha, letra na linha seguinte):</label>
+  <textarea id="entrada" rows="12" placeholder="[C]        [G]        [Am]       [F]\nAmizade sincera é um santo remédio\nUm abrigo seguro\n\n[C]     [G]     [Am]\nÉ um ombro amigo, é luz no escuro\n   [F]\nÉ tudo de bom"></textarea>
 
   <button onclick="gerarJSON()">Gerar JSON</button>
 
@@ -49,19 +49,24 @@
       const linhas = entrada.split("\n");
       const resultado = { title: titulo, lines: [] };
 
-      linhas.forEach(linha => {
-        const chords = [];
-        let lyrics = linha.replace(/\[(.*?)\]/g, "");
+      for (let i = 0; i < linhas.length; i++) {
+        const linhaAcordes = linhas[i];
+        const linhaLetra = linhas[i + 1];
 
-        let pos = 0;
-        linha.replace(/\[(.*?)\]/g, (match, acorde, offset) => {
-          const textoSemColchetes = linha.substring(0, offset).replace(/\[(.*?)\]/g, "");
+        if (linhaLetra === undefined || linhaAcordes.trim() === "") continue;
+
+        const chords = [];
+        let letraLimpa = linhaLetra;
+
+        linhaAcordes.replace(/\[(.*?)\]/g, (match, acorde, offset) => {
+          const textoSemColchetes = linhaAcordes.substring(0, offset).replace(/\[(.*?)\]/g, "");
           const posicao = textoSemColchetes.length;
           chords.push({ text: acorde, position: posicao });
         });
 
-        resultado.lines.push({ chords, lyrics });
-      });
+        resultado.lines.push({ chords, lyrics: letraLimpa });
+        i++; // pular a linha de letra que já foi processada
+      }
 
       document.getElementById("saida").textContent = JSON.stringify(resultado, null, 2);
     }
