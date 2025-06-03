@@ -1,0 +1,43 @@
+{
+  "title": "Amor Perfeito",
+  "lines": [
+    {
+      "chords": [
+        {
+          "text": "C",
+          "position": 0
+        },
+        {
+          "text": "G",
+          "position": 10
+        },
+        {
+          "text": "Am",
+          "position": 20
+        },
+        {
+          "text": "F",
+          "position": 30
+        }
+      ],
+      "lyrics": "Essa \u00e9 a primeira linha da can\u00e7\u00e3o exemplo"
+    },
+    {
+      "chords": [
+        {
+          "text": "Dm",
+          "position": 0
+        },
+        {
+          "text": "G",
+          "position": 10
+        },
+        {
+          "text": "C",
+          "position": 20
+        }
+      ],
+      "lyrics": "E essa \u00e9 a segunda linha com mais emo\u00e7\u00e3o"
+    }
+  ]
+}
