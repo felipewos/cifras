@@ -3,18 +3,39 @@
   "lines": [
     {
       "chords": [
-        { "text": "C", "position": 0 },
-        { "text": "G", "position": 10 },
-        { "text": "Am", "position": 20 },
-        { "text": "F", "position": 30 }
+        {
+          "text": "C",
+          "position": 0
+        },
+        {
+          "text": "G",
+          "position": 10
+        },
+        {
+          "text": "Am",
+          "position": 20
+        },
+        {
+          "text": "F",
+          "position": 30
+        }
       ],
       "lyrics": "Eu sei que vou te amar por toda a minha vida"
     },
     {
       "chords": [
-        { "text": "Dm", "position": 0 },
-        { "text": "G",  "position": 10 },
-        { "text": "C",  "position": 20 }
+        {
+          "text": "Dm",
+          "position": 0
+        },
+        {
+          "text": "G",
+          "position": 10
+        },
+        {
+          "text": "C",
+          "position": 20
+        }
       ],
       "lyrics": "E em cada despedida eu vou chorar"
     }
