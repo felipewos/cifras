@@ -1,42 +1,15 @@
 [
-  {
-    "title": "Amor Perfeito",
-    "file": "amor_perfeito.json"
-  },
-  {
-    "title": "Brisa do Mar",
-    "file": "brisa_do_mar.json"
-  },
-  {
-    "title": "Can\u00e7\u00e3o da Esperan\u00e7a",
-    "file": "cancao_da_esperanca.json"
-  },
-  {
-    "title": "Doce Ilus\u00e3o",
-    "file": "doce_ilusao.json"
-  },
-  {
-    "title": "Estrada da Vida",
-    "file": "estrada_da_vida.json"
-  },
-  {
-    "title": "Fogo no Cora\u00e7\u00e3o",
-    "file": "fogo_no_coracao.json"
-  },
-  {
-    "title": "Gratid\u00e3o",
-    "file": "gratid\u00e3o.json"
-  },
-  {
-    "title": "Horizonte Azul",
-    "file": "horizonte_azul.json"
-  },
-  {
-    "title": "Ilha dos Sonhos",
-    "file": "ilha_dos_sonhos.json"
-  },
-  {
-    "title": "Jardim da Alma",
-    "file": "jardim_da_alma.json"
-  }
+  {"title": "Amizade Sincera", "file": "amizade_sincera.json"},
+  {"title": "Amor Perfeito", "file": "amor_perfeito.json"},
+  {"title": "Brisa do Mar", "file": "brisa_do_mar.json"},
+  {"title": "Canção da Esperança", "file": "cancao_da_esperanca.json"},
+  {"title": "Doce Ilusão", "file": "doce_ilusao.json"},
+  {"title": "Estrada da Vida", "file": "estrada_da_vida.json"},
+  {"title": "Eu Sei Que Vou Te Amar", "file": "eu_sei_que_vou_te_amar.json"},
+  {"title": "Ffogo no Coração", "file": "fogo_no_coracao.json"},
+  {"title": "Gratidão", "file": "gratidão.json"},
+  {"title": "Horizonte Azul", "file": "horizonte_azul.json"},
+  {"title": "Ilha dos Sonhos", "file": "ilha_dos_sonhos.json"},
+  {"title": "Jardim da Alma", "file": "jardim_da_alma.json"},
+  {"title": "Teste Automático", "file": "teste_automacao.json"}
 ]
