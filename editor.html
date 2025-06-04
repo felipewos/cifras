@@ -87,7 +87,7 @@ Um abrigo seguro
         return;
       }
 
-      fetch(servidor + "/upload", {
+      fetch(servidor + "/enviar-cifra", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(jsonGerado)
